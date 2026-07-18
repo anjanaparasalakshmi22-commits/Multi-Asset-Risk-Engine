@@ -82,8 +82,7 @@ st.dataframe(report.style.format("€{:,.0f}"))
 
 st.subheader("Portfolio P&L distribution")
 hist_counts, bin_edges = np.histogram(port, bins=50)
-hist_df = pd.DataFrame({
-    "Daily return": [f"{(bin_edges[i]+bin_edges[i+1])/2:.2%}" for i in range(50)],
-    "Days": hist_counts,
-}).set_index("Daily return")
+centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+hist_df = pd.DataFrame({"Days": hist_counts},
+                       index=np.round(centers * 100, 2))
 st.bar_chart(hist_df)
