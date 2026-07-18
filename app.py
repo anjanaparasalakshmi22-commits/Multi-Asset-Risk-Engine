@@ -23,8 +23,6 @@ def load_returns():
 
 
 returns = load_returns()
-st.write("Data shape:", returns.shape)   # TEMPORARY debug — remove later
-
 if returns.empty:
     st.error("No data returned from Yahoo Finance. Try rebooting the app (Manage app → Reboot).")
     st.stop()
