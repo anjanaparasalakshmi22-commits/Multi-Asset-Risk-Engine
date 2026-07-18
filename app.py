@@ -31,6 +31,16 @@ if returns.empty:
 st.sidebar.header("Your Portfolio")
 investment = st.sidebar.number_input("Investment (€)", 1000, 10_000_000, 10_000, step=1000)
 alpha = st.sidebar.selectbox("Confidence level", [0.95, 0.99])
+start_date = st.sidebar.date_input("Data start date", pd.to_datetime("2023-07-01"))
+@st.cache_data(ttl=3600)
+def load_returns(start):
+    data = yf.download(TICKERS, start=start,
+                       auto_adjust=True, threads=False)["Close"]
+    data = data.dropna(axis=1, how="all")
+    data = data.dropna()
+    return data.pct_change().dropna()
+
+returns = load_returns(start_date)
 
 weights = []
 kept = list(returns.columns)
