@@ -19,6 +19,7 @@ def load_returns():
     return data.pct_change().dropna()
 
 returns = load_returns()
+st.write("Data shape:", returns.shape)
 
 st.sidebar.header("Your Portfolio")
 investment = st.sidebar.number_input("Investment (€)", 1000, 10_000_000, 10_000, step=1000)
